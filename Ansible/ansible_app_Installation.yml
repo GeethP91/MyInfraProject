@@ -1,0 +1,20 @@
+---
+- hosts: web
+  name: configuration play
+  user: ec2_user
+
+  gather_facts: false
+  pre_tasks:
+    - name: Install python for Ansible
+      become: true
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: false
+    - setup:
+
+  tasks:
+
+    - name: Install nginx
+      become: true
+      apt:
+        name: nginx
+        update_cache: true
